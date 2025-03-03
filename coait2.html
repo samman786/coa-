@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEEE 754 Single Precision</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>IEEE 754 Single Precision</h2>
+        <label for="decimalNum">Enter Decimal Number:</label>
+        <input type="number" id="decimalNum">
+        <button onclick="convertIEEE()">Convert</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function decimalToIEEE754(number) {
+            let buffer = new ArrayBuffer(4);
+            let view = new DataView(buffer);
+            view.setFloat32(0, number, false);
+            let binary = Array.from(new Uint8Array(buffer)).map(b => b.toString(2).padStart(8, '0')).join(' ');
+            return `IEEE 754 Single Precision Binary: ${binary}`;
+        }
+
+        function convertIEEE() {
+            let decimalNum = parseFloat(document.getElementById("decimalNum").value);
+            if (isNaN(decimalNum)) {
+                alert("Please enter a valid number");
+                return;
+            }
+            document.getElementById("output").innerHTML = decimalToIEEE754(decimalNum);
+        }
+    </script>
+</body>
+</html>
